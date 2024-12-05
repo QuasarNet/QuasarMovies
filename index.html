@@ -4,183 +4,435 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quasar Movies</title>
-    <style>
+    <link rel="icon" href="logo.png" type="image/x-icon">
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        html, body {
-            height: 100%;
-            font-family: Arial, sans-serif;
-            background-color: #0d1b2a;
-            color: white;
-            overflow-x: hidden;
-        }
+    html, body {
+        height: 100%;
+        font-family: Arial, sans-serif;
+        background-color: #0d1b2a;
+        color: white;
+        overflow-x: hidden;
+    }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-            display: none;
-        }
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
 
-        ::-webkit-scrollbar-thumb {
-            background-color: #1e1e1e;
-            border-radius: 4px;
-        }
+    ::-webkit-scrollbar-thumb {
+        background-color: #f1f1f1;
+        border-radius: 8px;
+    }
 
-        ::-webkit-scrollbar-track {
-            background-color: transparent;
-        }
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
 
-        body.scroll-active::-webkit-scrollbar {
-            display: block;
-        }
+    .container {
+        max-width: 100%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
 
-        .container {
-            max-width: 100%;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
+    .top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
 
-        .header {
-            text-align: center;
-        }
+    .top-bar img {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
 
-        .header img {
-            max-width: 100%;
-            height: auto;
-            max-height: 150px;
-        }
+    .top-bar img:hover {
+        transform: scale(1.1);
+    }
 
-        .header h4 {
-            margin: 10px 0 5px;
-        }
+    .search-container {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+    }
 
-        .header p {
-            font-size: 14px;
-            color: #b0b0b0;
-        }
+    .search-bar {
+        display: flex;
+        align-items: center;
+        background-color: #1e1e1e;
+        border: 1px solid white;
+        padding: 8px 15px;
+        border-radius: 10px;
+        color: white;
+        font-size: 16px;
+        gap: 10px;
+    }
 
-        .bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #141414;
-            border: 1px solid white;
-            padding: 10px 20px;
-            width: 90%;
-            max-width: 800px;
-            border-radius: 10px;
-            margin: 5px auto;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
+    .search-bar img {
+        width: 20px;
+        height: 20px;
+    }
 
-        .bar-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    .search-bar input {
+        flex-grow: 1;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 16px;
+        outline: none;
+    }
 
-        .text {
-            font-size: 16px;
-        }
+    .suggestions {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #1e1e1e;
+        border: 1px solid white;
+        border-radius: 10px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 100;
+        display: none;
+    }
 
-        .mini-bar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #1e1e1e;
-            border: 1px solid white;
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-size: 14px;
-            color: white;
-            min-width: 50px;
-            text-align: center;
-        }
+    .suggestion-item {
+        padding: 10px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
 
-        .download-btn {
-            background-color: #1e1e1e;
-            border: 1px solid white;
-            padding: 8px 15px;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
+    .suggestion-item:hover {
+        background-color: #333333;
+    }
 
-        .download-btn:hover {
-            background-color: #4a4a4a;
-        }
+    .bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #141414;
+        border: 1px solid white;
+        padding: 10px 20px;
+        width: 98%;
+        max-width: 800px;
+        border-radius: 10px;
+        margin: 1px auto;
+    }
 
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #1e1e1e;
-            border-top: 1px solid white;
-            text-align: center;
-            padding: 10px 0;
-        }
+    .bar-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
-        footer p {
-            font-size: 12px;
-        }
+    .text {
+        font-size: 15px;
+    }
 
-        @media (max-width: 768px) {
-            .bar {
-                width: 95%;
-            }
+    .mini-bar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #1e1e1e;
+        border: 1px solid white;
+        padding: 5px 10px;
+        border-radius: 8px;
+        font-size: 14px;
+        color: white;
+        min-width: 50px;
+        text-align: center;
+    }
 
-            .text {
-                font-size: 14px;
-            }
+    .download-btn {
+        background-color: #1e1e1e;
+        border: 1px solid white;
+        padding: 8px 15px;
+        border-radius: 8px;
+        color: white;
+        cursor: pointer;
+    }
 
-            .mini-bar {
-                font-size: 12px;
-                padding: 3px 8px;
-            }
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #1e1e1e;
+        border-top: 1px solid white;
+        text-align: center;
+        padding: 10px 0;
+    }
+</style>
 
-            .download-btn {
-                padding: 6px 10px;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="container">
 
-        <div class="header">
-            <img src="image-path" alt="Logo">
-            <h4>Quasar Movies</h4>
-            <p>Download and watch a variety of movies!</p>
+        <div class="top-bar">
+            <img src="info.png" alt="Info" onclick="window.open('https://github.com/quasarnet/QuasarMovies', '_blank')">
+            <div class="search-container">
+                <div class="search-bar">
+                    <img src="search.png" alt="Search Icon">
+                    <input type="text" id="search-input" placeholder="Search movies...">
+                </div>
+                <div class="suggestions" id="suggestions"></div>
+            </div>
         </div>
 
         <div class="bar">
             <div class="bar-left">
-                <div class="text">Movie</div>
-                <div class="mini-bar">Language</div>
-                <div class="mini-bar">Quality</div>
-                <div class="mini-bar">Size</div>
+                <div class="text">AquaMan & The Lost Kingdom</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">1080P/60FPS</div>
+                <div class="mini-bar">2.21GB</div>
             </div>
             <button class="download-btn" onclick="downloadFile('#')">Download</button>
         </div>
 
         <div class="bar">
             <div class="bar-left">
-                <div class="text">Movie</div>
-                <div class="mini-bar">Language</div>
-                <div class="mini-bar">Quality</div>
-                <div class="mini-bar">Size</div>
+                <div class="text">KingsMan: The Secret Service</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">1080P/60FPS</div>
+                <div class="mini-bar">1.39GB</div>
             </div>
             <button class="download-btn" onclick="downloadFile('#')">Download</button>
         </div>
+        
+                <div class="bar">
+            <div class="bar-left">
+                <div class="text">Venom: Let There Be Carnage</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">1080P/60FPS</div>
+                <div class="mini-bar">1.02GB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+
+        <div class="bar">
+            <div class="bar-left">
+                <div class="text">Iron Man 3</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">1080P/60FPS</div>
+                <div class="mini-bar">Unknown Size</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+        
+                <div class="bar">
+            <div class="bar-left">
+                <div class="text">Doctor Strange</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">1080P/60FPS</div>
+                <div class="mini-bar">1.23GB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+
+        <div class="bar">
+            <div class="bar-left">
+                <div class="text">Pirates Of The Caribbean: Curse Of The Black Pearl</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">720P/30FPS</div>
+                <div class="mini-bar">1.71GB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+        
+                <div class="bar">
+            <div class="bar-left">
+                <div class="text">Pacific Rim: Uprising</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">1080P/60FPS</div>
+                <div class="mini-bar">1.85GB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+
+        <div class="bar">
+            <div class="bar-left">
+                <div class="text">Iron Man 2</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">1080P/60FPS</div>
+                <div class="mini-bar">1.52GB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+        
+                <div class="bar">
+            <div class="bar-left">
+                <div class="text">Black Panther: Wakanda Forever</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">1080P/60FPS</div>
+                <div class="mini-bar">1.61GB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+
+        <div class="bar">
+            <div class="bar-left">
+                <div class="text">Xmen: Days Of Future Past</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">720P/30FPS</div>
+                <div class="mini-bar">1.2GB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+        
+                <div class="bar">
+            <div class="bar-left">
+                <div class="text">Xmen: Apocalypse</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">720P/30FPS</div>
+                <div class="mini-bar">1.12GB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+
+        <div class="bar">
+            <div class="bar-left">
+                <div class="text">Doctor Who: Time War</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">720P/30FPS</div>
+                <div class="mini-bar">772.1MB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+        
+                <div class="bar">
+            <div class="bar-left">
+                <div class="text">[Dune Entertainment] Unknown Movie</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">720P/30FPS</div>
+                <div class="mini-bar">744.9MB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+
+        <div class="bar">
+            <div class="bar-left">
+                <div class="text">Population Purge</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">720P/30FPS</div>
+                <div class="mini-bar">294.3MB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+        
+                <div class="bar">
+            <div class="bar-left">
+                <div class="text">Free Guy</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">1080P/60FPS</div>
+                <div class="mini-bar">1.27GB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+
+        <div class="bar">
+            <div class="bar-left">
+                <div class="text">[Unknown Movie] Doctor DoomsDay</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">720P/30FPS</div>
+                <div class="mini-bar">908.2MB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+        
+                <div class="bar">
+            <div class="bar-left">
+                <div class="text">Avengers: EndGame</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">1080P/60FPS</div>
+                <div class="mini-bar">360.8MB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+
+        <div class="bar">
+            <div class="bar-left">
+                <div class="text">Little Man</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">720P/30FPS</div>
+                <div class="mini-bar">443.3MB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+        
+                <div class="bar">
+            <div class="bar-left">
+                <div class="text">Dead Sea</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">Unknown Quality</div>
+                <div class="mini-bar">323.6MB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+        
+                <div class="bar">
+            <div class="bar-left">
+                <div class="text">Venom 3: The Last Dance</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">1080P/60FPS</div>
+                <div class="mini-bar">1.41GB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+
+        <div class="bar">
+            <div class="bar-left">
+                <div class="text">Constantine</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">720P/30FPS</div>
+                <div class="mini-bar">985.7MB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+        
+                <div class="bar">
+            <div class="bar-left">
+                <div class="text">Service Assassin</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">720P/30FPS</div>
+                <div class="mini-bar">878.5MB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+        
+                <div class="bar">
+            <div class="bar-left">
+                <div class="text">Fast & Furious: Hobbs & Shaw</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">1080P/60FPS</div>
+                <div class="mini-bar">985.6MB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+
+        <div class="bar">
+            <div class="bar-left">
+                <div class="text">John Wick: Chapter 4</div>
+                <div class="mini-bar">English</div>
+                <div class="mini-bar">1080P/60FPS</div>
+                <div class="mini-bar">1.01GB</div>
+            </div>
+            <button class="download-btn" onclick="downloadFile('#')">Download</button>
+        </div>
+        
+        <br>
+         <br>
 
     </div>
 
@@ -189,11 +441,68 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (document.body.scrollHeight > window.innerHeight) {
-                document.body.classList.add('scroll-active');
+        const bars = document.querySelectorAll('.bar');
+        const suggestionsContainer = document.getElementById('suggestions');
+        const searchInput = document.getElementById('search-input');
+
+        const suggestions = [
+            "AquaMan & The Lost Kingdom",
+            "KingsMan: The Secret Service",
+            "Venom: Let There Be Carnage",
+            "Iron Man 3",
+            "Doctor Strange",
+            "Pirates Of The Caribbean: Curse Of The Black Pearl",
+            "Pacific Rim: Uprising",
+            "Iron Man 2",
+            "Black Panther: Wakanda Forever",
+            "Xmen: Days Of Future Past",
+            "Xmen: Apocalypse",
+            "Doctor Who: Time War",
+            "[Dune Entertainment] Unknown Movie",
+            "Population Purge",
+            "Free Guy",
+            "[Unknown Movie] Doctor DoomsDay",
+            "Avengers: EndGame",
+            "Little Man",
+            "Dead Sea",
+            "Venom 3: The Last Dance",
+            "Constantine",
+            "Service Assassin",
+            "Fast & Furious: Hobbs & Shaw",
+            "John Wick: Chapter 4"
+        ];
+
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase();
+            suggestionsContainer.innerHTML = '';
+            if (query) {
+                const filtered = suggestions.filter(item => item.toLowerCase().includes(query));
+                filtered.forEach(item => {
+                    const suggestionElement = document.createElement('div');
+                    suggestionElement.textContent = item;
+                    suggestionElement.className = 'suggestion-item';
+                    suggestionElement.onclick = () => filterBars(item);
+                    suggestionsContainer.appendChild(suggestionElement);
+                });
+                suggestionsContainer.style.display = 'block';
+            } else {
+                suggestionsContainer.style.display = 'none';
             }
         });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container')) {
+                suggestionsContainer.style.display = 'none';
+                bars.forEach(bar => bar.style.display = 'flex');
+            }
+        });
+
+        function filterBars(query) {
+            bars.forEach(bar => {
+                const text = bar.querySelector('.text').textContent;
+                bar.style.display = text === query ? 'flex' : 'none';
+            });
+        }
 
         function downloadFile(fileId) {
             const url = `https://drive.google.com/uc?id=${fileId}&export=download`;

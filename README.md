@@ -15,7 +15,7 @@ Copyright Disclaimer: Under section 107 of the copyright Act 1976, allowance is 
 
 ### Got A Suggestion?
 If You have a movie or feature You'd like to be added to the site, please get in contact with Me:  
-[WhatsApp](https://instagram.com/quasar.developer)  
+[Instagram](https://instagram.com/quasar.developer)  
 
 <br>  
 

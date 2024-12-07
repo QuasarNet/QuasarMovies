@@ -1,0 +1,106 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #0d1b2a;
+}
+
+@media only screen and (min-width: 1024px) {
+  .container {
+    max-width: 80%;
+    padding: 40px;
+  }
+  body {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    width: 95%;
+    padding: 15px;
+  }
+  body {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    max-width: 90%;
+    padding: 20px;
+  }
+  body {
+    font-size: 15px;
+  }
+}
+
+@media only screen and (min-device-width: 1280px) and (orientation: landscape) {
+  .container {
+    max-width: 75%;
+  }
+  body {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (min-device-width: 720px) and (orientation: portrait) {
+  .container {
+    max-width: 90%;
+    padding: 20px;
+  }
+  body {
+    font-size: 15px;
+  }
+}
+
+@media only screen and (min-device-width: 1920px) {
+  .container {
+    max-width: 70%;
+    padding: 50px;
+  }
+  body {
+    font-size: 18px;
+  }
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #1e1e1e;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #333;
+}
+
+a {
+  color: #1e90ff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

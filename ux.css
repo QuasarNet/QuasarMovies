@@ -1,0 +1,47 @@
+@media (hover: none) and (pointer: coarse), 
+       (max-width: 768px), 
+       (max-device-width: 1024px), 
+       (device-width: 1280px) and (device-height: 720px) { 
+
+    * {
+        text-decoration: none !important;
+        outline: none !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    body, input, textarea, button, a, select {
+        -webkit-tap-highlight-color: transparent !important;
+        -webkit-focus-ring-color: transparent !important;
+        -moz-outline-style: none !important;
+    }
+
+    :focus {
+        outline: none !important;
+    }
+
+    a, button {
+        text-decoration: none !important;
+        color: inherit !important;
+    }
+
+    button:hover, 
+    button:focus, 
+    a:hover, 
+    a:focus {
+        background: none !important;
+    }
+
+    @media (device-width: 1280px) and (device-height: 720px), 
+           (device-width: 1920px) and (device-height: 1080px) {
+        * {
+            user-select: none !important;
+            -webkit-user-select: none !important;
+            -ms-user-select: none !important;
+        }
+    }
+
+    html, body {
+        touch-action: manipulation !important;
+    }
+}
